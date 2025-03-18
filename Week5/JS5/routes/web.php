@@ -34,5 +34,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
+Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
 Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
-Route::post('/kategori',[KategoriController::class,'store']);
+Route::post('/kategori', [KategoriController::class, 'store'])->name('kategori.store');

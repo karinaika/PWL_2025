@@ -301,6 +301,11 @@ return [
     'menu' => [
         // Navbar items:
         [
+            'text' => 'Manage Kategori',
+            'url'  => '/kategori',
+            'icon' => 'fas fa-tags', // Icon kategori
+        ],
+        [
             'type' => 'navbar-search',
             'text' => 'search',
             'topnav_right' => true,
