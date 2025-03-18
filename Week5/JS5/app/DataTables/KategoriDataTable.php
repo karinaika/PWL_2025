@@ -8,8 +8,6 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Field;
 use Yajra\DataTables\Services\DataTable;
 
 class KategoriDataTable extends DataTable
@@ -23,6 +21,14 @@ class KategoriDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             // ->addColumn('action', 'kategori.action')
+            ->addColumn('action', function ($id) {
+                $edit = route('kategori.edit', $id);
+                $delete = route('kategori.delete', $id);
+                return '
+                        <a href="' . $edit . '" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="' . $delete . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin ingin menghapus kategori ini?\')">Delete</a>
+                    ';
+            })
             ->setRowId('id');
     }
 
@@ -72,6 +78,12 @@ class KategoriDataTable extends DataTable
             Column::make('kategori_nama'),
             Column::make('created_at'),
             Column::make('updated_at'),
+
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(150)
+                ->addClass('text-center'),
         ];
     }
 
@@ -82,6 +94,4 @@ class KategoriDataTable extends DataTable
     {
         return 'Kategori_' . date('YmdHis');
     }
-
-    
 }
