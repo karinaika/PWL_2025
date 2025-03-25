@@ -106,20 +106,20 @@
                     {
                         data: "harga_beli",
                         className: "",
-                        orderable: true, 
-                        searchable: true 
+                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: true // searchable: true, jika ingin kolom ini bisa dicari
                     },
                     {
                         data: "harga_jual",
                         className: "",
-                        orderable: true, 
-                        searchable: true 
+                        orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: true // searchable: true, jika ingin kolom ini bisa dicari
                     },
                     {
                         data: "aksi",
                         className: "",
-                        orderable: false, 
-                        searchable: false 
+                        orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
+                        searchable: false // searchable: true, jika ingin kolom ini bisa dicari
                     }
                 ]
             });
