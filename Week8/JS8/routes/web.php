@@ -121,6 +121,10 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+    // Import Barang with Excel
+    Route::get('import', [BarangController::class, 'import']); // ajax form upload excel
+    Route::post('import_ajax', [BarangController::class, 'import_ajax']); // ajax import excel
+
     Route::group(['prefix' => 'supplier'], function () {
         Route::get('/', [SupplierController::class, 'index']);
         Route::post('/list', [SupplierController::class, 'list']);
