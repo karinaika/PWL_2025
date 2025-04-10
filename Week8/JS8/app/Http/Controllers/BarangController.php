@@ -202,7 +202,7 @@ class BarangController extends Controller
                             'kategori_id' => $value['A'],
                             'barang_kode' => $value['B'],
                             'barang_nama' => $value['C'],
-                            'harga_beli' => $value['D'],=
+                            'harga_beli' => $value['D'],
                             'harga_jual' => $value['E'],
                             'created_at' => now(),
                         ];
