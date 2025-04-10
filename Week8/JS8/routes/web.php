@@ -47,6 +47,8 @@ Route::middleware(['auth'])->group(function () {
             // Import User with Excel
             Route::get('import', [UserController::class, 'import']); // ajax form upload excel
             Route::post('import_ajax', [UserController::class, 'import_ajax']); // ajax import excel
+            // Export User with Excel
+            Route::get('export_excel', [UserController::class, 'export_excel']); //export excel
         });
     });
 
