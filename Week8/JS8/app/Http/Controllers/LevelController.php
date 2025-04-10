@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class LevelController extends Controller
 {
@@ -326,5 +327,60 @@ class LevelController extends Controller
         }
 
         return redirect('/');
+    }
+
+    public function export_excel()
+    {
+        // Ambil data level yang akan diekspor
+        $levels = LevelModel::select('level_id', 'level_kode', 'level_nama')->orderBy('level_id')->get();
+
+        // Load library PhpSpreadsheet
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set header kolom
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'ID Level');
+        $sheet->setCellValue('C1', 'Kode Level');
+        $sheet->setCellValue('D1', 'Nama Level');
+
+        // Format header bold
+        $sheet->getStyle('A1:D1')->getFont()->setBold(true);
+
+        // Isi data level
+        $no = 1;
+        $baris = 2;
+        foreach ($levels as $level) {
+            $sheet->setCellValue('A' . $baris, $no);
+            $sheet->setCellValue('B' . $baris, $level->level_id);
+            $sheet->setCellValue('C' . $baris, $level->level_kode);
+            $sheet->setCellValue('D' . $baris, $level->level_nama);
+            $baris++;
+            $no++;
+        }
+
+        // Set auto size untuk kolom
+        foreach (range('A', 'D') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
+        }
+
+        // Set title sheet
+        $sheet->setTitle('Data Level');
+
+        // Generate filename
+        $filename = 'Data_Level_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+        // Set header untuk download file
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: cache, must-revalidate');
+        header('Pragma: public');
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+        exit;
     }
 }

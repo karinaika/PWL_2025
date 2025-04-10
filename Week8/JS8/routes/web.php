@@ -73,6 +73,8 @@ Route::middleware(['auth'])->group(function () {
             // Import Level with Excel
             Route::get('import', [LevelController::class, 'import']); // ajax form upload excel
             Route::post('import_ajax', [LevelController::class, 'import_ajax']); // ajax import excel
+            // Export Level with Excel
+            Route::get('export_excel', [LevelController::class, 'export_excel']); //export excel
         });
     });
 
@@ -159,15 +161,4 @@ Route::middleware(['auth'])->group(function () {
         Route::post('import_ajax', [SupplierController::class, 'import_ajax']); // ajax import excel
     });
 
-    // // artinya semua route di dalam group ini harus punya role ADM (Administrator) dan MNG (Manager)
-    // Route::middleware(['authorize:ADM,MNG'])->group(function(){
-    //     Route::get('/barang', [BarangController::class, 'index']);
-    //     Route::post('/barang/list', [BarangController::class, 'list']);
-    //     Route::get('/barang/create_ajax', [BarangController::class, 'create_ajax']); // ajax form create
-    //     Route::post('/barang_ajax', [BarangController::class, 'store_ajax']); // ajax store
-    //     Route::get('/barang/{id}/edit_ajax', [BarangController::class, 'edit_ajax']); // ajax form edit
-    //     Route::put('/barang/{id}/update_ajax', [BarangController::class, 'update_ajax']); // ajax update
-    //     Route::get('/barang/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']); // ajax form confirm
-    //     Route::delete('/barang/{id}/delete_ajax', [BarangController::class, 'delete_ajax']); // ajax delete
-    // });
 });
