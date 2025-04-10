@@ -8,6 +8,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class SupplierController extends Controller
 {
@@ -325,5 +326,64 @@ class SupplierController extends Controller
             }
         }
         return redirect('/');
+    }
+
+    public function export_excel()
+    {
+        // Ambil data supplier yang akan diekspor
+        $suppliers = SupplierModel::select('supplier_id', 'supplier_kode', 'supplier_nama', 'supplier_alamat')
+            ->orderBy('supplier_id')
+            ->get();
+
+        // Load library PhpSpreadsheet
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set header kolom
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'Supplier ID');
+        $sheet->setCellValue('C1', 'Kode Supplier');
+        $sheet->setCellValue('D1', 'Nama Supplier');
+        $sheet->setCellValue('E1', 'Alamat Supplier');
+
+        // Format header bold
+        $sheet->getStyle('A1:E1')->getFont()->setBold(true);
+
+        // Isi data supplier
+        $no = 1;
+        $baris = 2;
+        foreach ($suppliers as $supplier) {
+            $sheet->setCellValue('A' . $baris, $no);
+            $sheet->setCellValue('B' . $baris, $supplier->supplier_id);
+            $sheet->setCellValue('C' . $baris, $supplier->supplier_kode);
+            $sheet->setCellValue('D' . $baris, $supplier->supplier_nama);
+            $sheet->setCellValue('E' . $baris, $supplier->supplier_alamat);
+            $baris++;
+            $no++;
+        }
+
+        // Set auto size untuk kolom
+        foreach (range('A', 'E') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
+        }
+
+        // Set title sheet
+        $sheet->setTitle('Data Supplier');
+
+        // Generate filename
+        $filename = 'Data_Supplier_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+        // Set header untuk download file
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: cache, must-revalidate');
+        header('Pragma: public');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+        exit;
     }
 }
