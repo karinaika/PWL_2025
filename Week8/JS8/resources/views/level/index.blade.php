@@ -5,8 +5,9 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <a href="{{ url('level/create') }}" class="btn btn-sm btn-primary mt-1">Tambah</a>
-                <button onclick="modalAction('{{ url('level/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
+                <button onclick="modalAction('{{ url('/level/import') }}')" class="btn btn-info">Import Level</button>
+                <a href="{{ url('/level/export_excel') }}" class="btn btn-primary"><i class="fa fa-file- excel"></i> Export Level</a>
+                <button onclick="modalAction('{{ url('/level/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
             </div>
         </div>
         <div class="card-body">
@@ -38,13 +39,13 @@
                         <th>ID</th>
                         <th>Level Kode</th>
                         <th>Level Nama</th>
-                        <th>aksi</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
             </table>
         </div>
     </div>
-    <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data- backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
+    <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 @endsection
 
 @push('css')
@@ -52,11 +53,12 @@
 
 @push('js')
     <script>
-         function modalAction(url = ''){
-            $('#myModal').load(url,function(){
-            $('#myModal').modal('show')
-        });
-    }
+        function modalAction(url = ''){
+            $('#myModal').load(url, function(){
+                $('#myModal').modal('show');
+            });
+        }
+
         $(document).ready(function() {
             var dataLevel = $('#table_level').DataTable({
                 serverSide: true,
@@ -68,35 +70,36 @@
                         d.level_id = $('#level_id').val();
                     }
                 },
-                columns: [{
-                    data: "DT_RowIndex",
-                    className: "text-center",
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: "level_kode",
-                    className: "",
-                    orderable: true,
-                    searchable: true
-                },
-                {
-                    data: "level_nama",
-                    className: "",
-                    orderable: true,
-                    searchable: true
-                },
-                {
-                    data: "aksi",
-                    className: "",
-                    orderable: false,
-                    searchable: false
-                }
-            ]
+                columns: [
+                    {
+                        data: "level_id",
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: "level_kode",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "level_nama",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: "aksi",
+                        className: "",
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
             });
             $('#level_id').on('change', function() {
                 dataLevel.ajax.reload();
             });
-        })
+        });
     </script>
 @endpush
