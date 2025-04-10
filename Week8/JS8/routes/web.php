@@ -103,6 +103,8 @@ Route::middleware(['auth'])->group(function () {
             // Import Kategori with Excel
             Route::get('import', [KategoriController::class, 'import']); // ajax form upload excel
             Route::post('import_ajax', [KategoriController::class, 'import_ajax']); // ajax import excel
+            // Export Barang with Excel
+            Route::get('export_excel', [KategoriController::class, 'export_excel']); //export excel
         });
     });
 
