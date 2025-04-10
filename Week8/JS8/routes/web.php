@@ -95,6 +95,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}/delete_ajax', [KategoriController::class, 'confirm_ajax']); //menampilkan form confirm delete kategori ajax
             Route::delete('/{id}/delete_ajax', [KategoriController::class, 'delete_ajax']); // menghapus data kategori ajax
             Route::delete('/{id}', [KategoriController::class, 'destroy']); // menghapus data kategori
+            // Import Kategori with Excel
+            Route::get('import', [KategoriController::class, 'import']); // ajax form upload excel
+            Route::post('import_ajax', [KategoriController::class, 'import_ajax']); // ajax import excel
         });
     });
 
