@@ -131,14 +131,45 @@
         <i class="fas fa-th-large"></i>
       </a>
     </li>
-    <li class="nav-item">
-      <a href="#" class="nav-link text-danger"
-        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-        <i class="fas fa-sign-out-alt"></i> Logout
+    <!-- User profile dropdown -->
+    <li class="nav-item dropdown user-menu" style="position: relative;">
+      <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-toggle="dropdown"
+        style="padding: 0.5rem 1rem;">
+        <img
+          src="{{ auth()->user()->profile_picture ? asset('storage/' . auth()->user()->profile_picture) : asset('img/default-profile.png') }}"
+          class="user-image img-circle elevation-1" alt="Profile Picture"
+          style="width: 32px; height: 32px; object-fit: cover; margin-right: 8px;">
+        <span class="d-none d-md-inline" style="line-height: 32px;">{{ auth()->user()->nama }}</span>
+        <i class="fas fa-chevron-down ml-2"></i>
       </a>
-      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-      </form>
+
+      <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <!-- User image -->
+        <li class="user-header bg-primary">
+          <img
+            src="{{ auth()->user()->profile_picture ? asset('storage/' . auth()->user()->profile_picture) : asset('img/default-profile.png') }}"
+            class="img-circle elevation-2" alt="Profile Picture"
+            style="width: 100px; height: 100px; object-fit: cover;">
+          <p>
+            {{ auth()->user()->nama }}
+            <small>{{ auth()->user()->level->level_nama ?? 'User' }}</small>
+          </p>
+        </li>
+
+        <!-- Menu Footer-->
+        <li class="user-footer">
+          <a href="{{ url('/profile') }}" class="btn btn-default btn-flat">
+            <i class="fas fa-user mr-1"></i> Profile
+          </a>
+          <a href="#" class="btn btn-default btn-flat float-right"
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="fas fa-sign-out-alt mr-1"></i> Logout
+          </a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+          </form>
+        </li>
+      </ul>
     </li>
   </ul>
 </nav>

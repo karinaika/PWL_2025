@@ -12,7 +12,7 @@ class UserModel extends Authenticatable
 
     protected $table = 'm_user';
     protected $primaryKey = 'user_id';
-    protected $fillable = ['username', 'password', 'nama', 'level_id', 'created_at', 'updated_at'];
+    protected $fillable = ['username', 'password', 'nama', 'level_id', 'profile_picture', 'created_at', 'updated_at'];
 
     protected $hidden = ['password']; // jangan di tampilkan saat select
 
@@ -26,7 +26,7 @@ class UserModel extends Authenticatable
         return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
     }
 
-   /**
+    /**
      * Mendapatkan nama role
      */
     public function getRoleName(): string
@@ -43,10 +43,18 @@ class UserModel extends Authenticatable
     }
 
     /**
-     * Mendapatkan kode role
+     * Mendapatkan nama role
      */
     public function getRole()
     {
         return $this->level->level_kode;
+    }
+
+    // Menampilkan foto profil user secara otomatis.
+    public function getProfilePictureUrlAttribute()
+    {
+        return $this->profile_picture
+            ? asset('storage/profile_pictures/' . $this->profile_picture)
+            : asset('images/default-profile.png');
     }
 }
