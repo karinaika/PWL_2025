@@ -55,7 +55,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
-                <button type="button" class="btn btn-success" onclick="window.print()">Cetak Struk</button>
+                <!-- <button type="button" class="btn btn-success" onclick="window.print()">Cetak Struk</button> -->
             </div>
         </div>
     </div>
