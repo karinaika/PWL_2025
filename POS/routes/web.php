@@ -42,6 +42,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}', [UserController::class, 'show']); // menampilkan detail user
             Route::get('/{id}/edit', [UserController::class, 'edit']); // menampilkan halaman form edit user
             Route::put('/{id}', [UserController::class, 'update']); // menyimpan perubahan data user
+            // Show menggunakan AJAX
+            Route::get('/{id}/show_ajax', [UserController::class, 'show_ajax']); // menampilkan detail user ajax
             //Edit Menggunakan AJAX
             Route::get('/{id}/edit_ajax', [UserController::class, 'edit_ajax']); // Menampilkan halaman form edit user Ajax
             Route::put('/{id}/update_ajax', [UserController::class, 'update_ajax']); // Menyimpan perubahan data user Ajax
@@ -72,6 +74,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}', [LevelController::class, 'show']); // menampilkan detail level
             Route::get('/{id}/edit', [LevelController::class, 'edit']); // menampilkan halaman form edit level
             Route::put('/{id}', [LevelController::class, 'update']); // menyimpan perubahan data level
+            // Show menggunakan AJAX
+            Route::get('/{id}/show_ajax', [LevelController::class, 'show_ajax']); // menampilkan detail level ajax
             //Edit Menggunakan AJAX
             Route::get('/{id}/edit_ajax', [LevelController::class, 'edit_ajax']); // Menampilkan halaman form edit level Ajax
             Route::put('/{id}/update_ajax', [LevelController::class, 'update_ajax']); // Menyimpan perubahan data level Ajax
@@ -102,6 +106,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}', [KategoriController::class, 'show']); // menampilkan detail kategori
             Route::get('/{id}/edit', [KategoriController::class, 'edit']); // menampilkan halaman form edit kategori
             Route::put('/{id}', [KategoriController::class, 'update']); // menyimpan perubahan data kategori
+            // Show menggunakan AJAX
+            Route::get('/{id}/show_ajax', [KategoriController::class, 'show_ajax']); // menampilkan detail kategori ajax
             // Edit menggunakan AJAX
             Route::get('/{id}/edit_ajax', [KategoriController::class, 'edit_ajax']); // menampilkan halaman form edit kategori ajax
             Route::put('/{id}/update_ajax', [KategoriController::class, 'update_ajax']); // menyimpan perubahan data kategori ajax
@@ -138,6 +144,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/ajax', [BarangController::class, 'store_ajax']); // Simpan barang baru AJAX
             Route::get('/{id}/edit', [BarangController::class, 'edit']); // Form edit barang
             Route::put('/{id}', [BarangController::class, 'update']); // Simpan perubahan barang
+            // Show menggunakan AJAX
+            Route::get('/{id}/show_ajax', [BarangController::class, 'show_ajax']); // Menampilkan detail barang ajax
             // Edit menggunakan AJAX
             Route::get('/{id}/edit_ajax', [BarangController::class, 'edit_ajax']); // Form edit barang AJAX
             Route::put('/{id}/update_ajax', [BarangController::class, 'update_ajax']); // Simpan perubahan barang AJAX
@@ -168,6 +176,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{id}', [SupplierController::class, 'show']);
             Route::get('/{id}/edit', [SupplierController::class, 'edit']);
             Route::put('/{id}', [SupplierController::class, 'update']);
+            // Show menggunakan AJAX
+            Route::get('/{id}/show_ajax', [SupplierController::class, 'show_ajax']);
             // Edit menggunakan AJAX
             Route::get('/{id}/edit_ajax', [SupplierController::class, 'edit_ajax']); // menampilkan halaman form edit Supplier ajax
             Route::put('/{id}/update_ajax', [SupplierController::class, 'update_ajax']); // menyimpan perubahan data Supplier ajax
