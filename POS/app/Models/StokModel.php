@@ -1,30 +1,37 @@
 <?php
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class StokModel extends Model
 {
-    use HasFactory;
-
-    protected $table = 't_stok'; // <- WAJIB karena nama tabel kamu bukan plural
-    protected $primaryKey = 'stok_id'; // <- sesuaikan dengan nama primary key
-
+    protected $table = 't_stok';
+    protected $primaryKey = 'stok_id';
     protected $fillable = [
         'barang_id',
-        'stok_jumlah',
+        'user_id',
         'stok_tanggal',
-        'user_id'
+        'stok_jumlah',
+        'created_at',
+        'updated_at'
     ];
 
+    // Relasi dengan tabel Barang (jika ada model Barang)
     public function barang()
     {
-        return $this->belongsTo(BarangModel::class, 'barang_id', 'barang_id');
+        return $this->belongsTo(BarangModel::class, 'barang_id');
     }
 
+    // Relasi dengan tabel User
     public function user()
     {
-        return $this->belongsTo(UserModel::class, 'user_id', 'user_id');
+        return $this->belongsTo(UserModel::class, 'user_id');
+    }
+
+    //akses pakai $stok->jumlah
+    public function getJumlahAttribute()
+    {
+        return $this->stok_jumlah;
     }
 }

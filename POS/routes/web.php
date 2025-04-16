@@ -154,66 +154,61 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::group(['prefix' => 'supplier'], function () {
-        Route::get('/', [SupplierController::class, 'index']);
-        Route::post('/list', [SupplierController::class, 'list']);
-        Route::get('/create', [SupplierController::class, 'create']);
-        Route::post('/', [SupplierController::class, 'store']);
-        // Create menggunakan AJAX
-        Route::get('/create_ajax', [SupplierController::class, 'create_ajax']); // menampilkan halaman form tambah Supplier ajax
-        Route::post('/ajax', [SupplierController::class, 'store_ajax']); // menyimpan data Supplier baru ajax
-        Route::get('/{id}', [SupplierController::class, 'show']);
-        Route::get('/{id}/edit', [SupplierController::class, 'edit']);
-        Route::put('/{id}', [SupplierController::class, 'update']);
-        // Edit menggunakan AJAX
-        Route::get('/{id}/edit_ajax', [SupplierController::class, 'edit_ajax']); // menampilkan halaman form edit Supplier ajax
-        Route::put('/{id}/update_ajax', [SupplierController::class, 'update_ajax']); // menyimpan perubahan data Supplier ajax
-        // Delete menggunakan AJAX
-        Route::get('/{id}/delete_ajax', [SupplierController::class, 'confirm_ajax']); //menampilkan form confirm delete Supplier ajax
-        Route::delete('/{id}/delete_ajax', [SupplierController::class, 'delete_ajax']); // menghapus data Supplier ajax
-        Route::delete('/{id}', [SupplierController::class, 'destroy']);
-        // Import Supplier with Excel
-        Route::get('import', [SupplierController::class, 'import']); // ajax form upload excel
-        Route::post('import_ajax', [SupplierController::class, 'import_ajax']); // ajax import excel
-        // Export Supplier with Excel
-        Route::get('export_excel', [SupplierController::class, 'export_excel']); //export excel
-        // Export Supplier with Pdf
-        Route::get('export_pdf', [SupplierController::class, 'export_pdf']); //export pdf
+    // artinya semua route di dalam group ini harus punya role ADM (Administrator) dan MNG (Manager)
+    Route::middleware(['authorize:ADM,MNG'])->group(function () {
+        Route::group(['prefix' => 'supplier'], function () {
+            Route::get('/', [SupplierController::class, 'index']);
+            Route::post('/list', [SupplierController::class, 'list']);
+            Route::get('/create', [SupplierController::class, 'create']);
+            Route::post('/', [SupplierController::class, 'store']);
+            // Create menggunakan AJAX
+            Route::get('/create_ajax', [SupplierController::class, 'create_ajax']); // menampilkan halaman form tambah Supplier ajax
+            Route::post('/ajax', [SupplierController::class, 'store_ajax']); // menyimpan data Supplier baru ajax
+            Route::get('/{id}', [SupplierController::class, 'show']);
+            Route::get('/{id}/edit', [SupplierController::class, 'edit']);
+            Route::put('/{id}', [SupplierController::class, 'update']);
+            // Edit menggunakan AJAX
+            Route::get('/{id}/edit_ajax', [SupplierController::class, 'edit_ajax']); // menampilkan halaman form edit Supplier ajax
+            Route::put('/{id}/update_ajax', [SupplierController::class, 'update_ajax']); // menyimpan perubahan data Supplier ajax
+            // Delete menggunakan AJAX
+            Route::get('/{id}/delete_ajax', [SupplierController::class, 'confirm_ajax']); //menampilkan form confirm delete Supplier ajax
+            Route::delete('/{id}/delete_ajax', [SupplierController::class, 'delete_ajax']); // menghapus data Supplier ajax
+            Route::delete('/{id}', [SupplierController::class, 'destroy']);
+            // Import Supplier with Excel
+            Route::get('import', [SupplierController::class, 'import']); // ajax form upload excel
+            Route::post('import_ajax', [SupplierController::class, 'import_ajax']); // ajax import excel
+            // Export Supplier with Excel
+            Route::get('export_excel', [SupplierController::class, 'export_excel']); //export excel
+            // Export Supplier with Pdf
+            Route::get('export_pdf', [SupplierController::class, 'export_pdf']); //export pdf
+        });
     });
 
-    Route::group(['prefix' => 'stok'], function () {
-        Route::get('/', [StokController::class, 'index']);
-        Route::post('/list', [StokController::class, 'list']);
-        Route::get('/create', [StokController::class, 'create']);
-        Route::post('/', [StokController::class, 'store']);
-
-        // Create menggunakan AJAX
-        Route::get('/create_ajax', [StokController::class, 'create_ajax']); // menampilkan form tambah stok via ajax
-        Route::post('/ajax', [StokController::class, 'store_ajax']); // menyimpan stok baru via ajax
-
-        Route::get('/{id}', [StokController::class, 'show']);
-        Route::get('/{id}/edit', [StokController::class, 'edit']);
-        Route::put('/{id}', [StokController::class, 'update']);
-
-        // Edit menggunakan AJAX
-        Route::get('/{id}/edit_ajax', [StokController::class, 'edit_ajax']); // menampilkan form edit stok via ajax
-        Route::put('/{id}/update_ajax', [StokController::class, 'update_ajax']); // menyimpan perubahan stok via ajax
-
-        // Delete menggunakan AJAX
-        Route::get('/{id}/delete_ajax', [StokController::class, 'confirm_ajax']); // konfirmasi hapus stok via ajax
-        Route::delete('/{id}/delete_ajax', [StokController::class, 'delete_ajax']); // hapus stok via ajax
-
-        Route::delete('/{id}', [StokController::class, 'destroy']);
-
-        // Import stok via Excel
-        Route::get('import', [StokController::class, 'import']); // form upload
-        Route::post('import_ajax', [StokController::class, 'import_ajax']); // proses import
-
-        // Export stok ke Excel
-        Route::get('export_excel', [StokController::class, 'export_excel']);
-
-        // Export stok ke PDF
-        Route::get('export_pdf', [StokController::class, 'export_pdf']);
+    // artinya semua route di dalam group ini harus punya role ADM (Administrator), MNG (Manager) dan STF (Staff)
+    Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
+        Route::group(['prefix' => 'stok'], function () {
+            Route::get('/', [StokController::class, 'index']);
+            Route::post('/list', [StokController::class, 'list']); // menampilkan data stok dalam bentuk json untuk datatables
+            //Show Menggunakan AJAX
+            Route::get('/{id}/show_ajax', [StokController::class, 'show_ajax']); // Menampilkan detail stok Ajax
+            Route::get('/{id}', [StokController::class, 'show']); // Menampilkan detail barang
+            // Create menggunakan AJAX
+            Route::get('/create_ajax', [StokController::class, 'create_ajax']); // menampilkan halaman form tambah Stok ajax
+            Route::post('/ajax', [StokController::class, 'store_ajax']); // menyimpan data Stok baru ajax
+            // Edit menggunakan AJAX
+            Route::get('/{id}/edit_ajax', [StokController::class, 'edit_ajax']); // menampilkan halaman form edit Stok ajax
+            Route::put('/{id}/update_ajax', [StokController::class, 'update_ajax']); // menyimpan perubahan data Stok ajax
+            // Delete menggunakan AJAX
+            Route::get('/{id}/delete_ajax', [StokController::class, 'confirm_ajax']); //menampilkan form confirm delete Stok ajax
+            Route::delete('/{id}/delete_ajax', [StokController::class, 'delete_ajax']); // menghapus data Stok ajax
+            // Import Supplier with Excel
+            Route::get('import', [StokController::class, 'import']); // ajax form upload excel
+            Route::post('import_ajax', [StokController::class, 'import_ajax']); // ajax import excel
+            // Export Supplier with Excel
+            Route::get('export_excel', [StokController::class, 'export_excel']); //export excel
+            // Export Supplier with Pdf
+            Route::get('export_pdf', [StokController::class, 'export_pdf']); //export pdf
+        });
     });
 
 });
