@@ -112,9 +112,10 @@ class BarangController extends Controller
     // Menampilkan form edit data barang dgn ajax
     public function edit_ajax($id)
     {
+        $kategori = KategoriModel::select('kategori_id', 'kategori_nama')->get();
         $barang = BarangModel::find($id);
         $level = LevelModel::select('level_id', 'level_nama')->get();
-        return view('barang.edit_ajax', ['barang' => $barang, 'level' => $level]);
+        return view('barang.edit_ajax', ['barang' => $barang, 'level' => $level, 'kategori' => $kategori]);
     }
 
 

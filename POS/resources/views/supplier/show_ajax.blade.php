@@ -24,19 +24,19 @@
         <div class="modal-body">
             <table class="table table-bordered table-sm">
                 <tr>
-                    <th>ID</th>
+                    <th width="35%">ID Supplier</th>
                     <td>{{ $supplier->supplier_id }}</td>
                 </tr>
                 <tr>
-                    <th>Kode supplier</th>
+                    <th>Kode Supplier</th>
                     <td>{{ $supplier->supplier_kode }}</td>
                 </tr>
                 <tr>
-                    <th>Nama supplier</th>
+                    <th>Nama Supplier</th>
                     <td>{{ $supplier->supplier_nama }}</td>
                 </tr>
                 <tr>
-                    <th>Alamat supplier</th>
+                    <th>Alamat Supplier</th>
                     <td>{{ $supplier->supplier_alamat }}</td>
                 </tr>
             </table>
