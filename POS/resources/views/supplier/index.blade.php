@@ -27,6 +27,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>ID Supplier</th>
                         <th>Kode Supplier</th>
                         <th>Nama Supplier</th>
                         <th>Alamat Supplier</th>
@@ -67,6 +68,12 @@
                         className: "text-center",
                         orderable: false,
                         searchable: false
+                    },
+                    {
+                        data: "supplier_id",
+                        className: "",
+                        orderable: true,
+                        searchable: true
                     },
                     {
                         data: "supplier_kode",

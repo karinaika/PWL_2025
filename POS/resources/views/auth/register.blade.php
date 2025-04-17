@@ -69,7 +69,7 @@
                         <small id="error-password_confirmation" class="error-text text-danger"></small>
                     </div>
 
-                    <div class="input-group mb-3">
+                    <!-- <div class="input-group mb-3">
                         <select id="level_id" name="level_id" class="form-control" required>
                             <option value="">Select Level</option>
                             @foreach ($levels as $level)
@@ -82,7 +82,7 @@
                             </div>
                         </div>
                         <small id="error-level_id" class="error-text text-danger"></small>
-                    </div>
+                    </div> -->
 
                     <div class="row">
                         <div class="col-8">
